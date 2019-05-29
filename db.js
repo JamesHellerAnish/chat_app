@@ -2,14 +2,25 @@ const sq = require('sequelize')
 
 const db = new sq({
     dialect:'sqlite',
-    storage:__dirname+'./chats.db'
+    storage:__dirname+'/chats.db'
 })
 
-const Chats = db.define('chat', {
+const Users = db.define('users',{
     username:{
         type:sq.STRING(30),
         allowNull:false
     },
+    password:{
+        type:sq.STRING(30),
+        allowNull:false
+    }
+})
+
+const Chats = db.define('chat', {
     msg:sq.TEXT,
 })
-module.exports = {db,Chats}
+
+Users.hasMany(Chats);
+Chats.belongsTo(Users);
+
+module.exports = {db,Chats,Users}
