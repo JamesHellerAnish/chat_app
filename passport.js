@@ -9,7 +9,7 @@ passport.serializeUser((user,done)=>{
 
 passport.deserializeUser((username,done)=>{
     Users.findOne({
-        username:username
+        where:{username:username}
     }).then((user)=>{
         if(!user){
             return done(new Error('No such user'))

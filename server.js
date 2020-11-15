@@ -27,11 +27,12 @@ app.use(passport.session())
 app.use('/login',(require('./routes/login')))
 app.use('/chat',(require('./routes/chat')))
 app.use('/signup',(require('./routes/signup')))
-io.on('connection',(socket)=>{
-    socket.on('msg_send',(data)=>{
-        io.emit('rcv_msg',{msg:data.msg})
-    })
-})
+
+io.on('connection', (socket) => {
+    socket.on('chat message', (msg) => {
+      io.emit('chat message', msg + r);
+    });
+  });
 db.sync().then(()=>{
     server.listen(8161,()=>{
         console.log('Server started at http://localhost:8161')
